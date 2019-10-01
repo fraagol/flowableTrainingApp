@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomController {
 
  @GetMapping("/hello")
-     public String hello(@RequestParam String name) {
+     public String hello(@RequestParam(defaultValue = "Participant") String name) {
       return String.format("Hi %s, welcome to the Flowable training", name);
      }
 }
