@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.flowable.org/processdef">
+  <process id="twoParallelTasksProcess" name="2- Two Parallel Tasks Process" isExecutable="true">
+    <startEvent id="startEvent1"></startEvent>
+    <sequenceFlow id="sid-0A4DF995-B5AB-44F8-ACFB-2E26B16844F6" sourceRef="startEvent1" targetRef="sid-05E36A13-63A5-47C8-8743-DB1522655BE8"></sequenceFlow>
+    <parallelGateway id="sid-05E36A13-63A5-47C8-8743-DB1522655BE8"></parallelGateway>
+    <userTask id="sid-1C3EC165-141B-4F24-AC21-6F1B8BE795A1" name="First Parallel Task"></userTask>
+    <userTask id="sid-E848B9FC-2B96-41E5-89D3-4B6B3800B0C2" name="Second Parallel Task"></userTask>
+    <sequenceFlow id="sid-CA4472CC-58CB-446A-85DE-7F12279B69C9" sourceRef="sid-05E36A13-63A5-47C8-8743-DB1522655BE8" targetRef="sid-E848B9FC-2B96-41E5-89D3-4B6B3800B0C2"></sequenceFlow>
+    <sequenceFlow id="sid-5E00A408-D5DD-43AD-BD69-DB9C93A8C882" sourceRef="sid-05E36A13-63A5-47C8-8743-DB1522655BE8" targetRef="sid-1C3EC165-141B-4F24-AC21-6F1B8BE795A1"></sequenceFlow>
+    <endEvent id="sid-F8361504-08B0-4C84-AEF3-D1EE5D2B3FF6"></endEvent>
+    <parallelGateway id="sid-1C352519-49B6-4968-B81A-8F1930301570"></parallelGateway>
+    <sequenceFlow id="sid-51E423D8-E01E-479F-AF3F-48804C339AC5" sourceRef="sid-E848B9FC-2B96-41E5-89D3-4B6B3800B0C2" targetRef="sid-1C352519-49B6-4968-B81A-8F1930301570"></sequenceFlow>
+    <sequenceFlow id="sid-5680F671-5472-41F4-B6B9-05BAFBB2091D" sourceRef="sid-1C352519-49B6-4968-B81A-8F1930301570" targetRef="sid-F8361504-08B0-4C84-AEF3-D1EE5D2B3FF6"></sequenceFlow>
+    <sequenceFlow id="sid-1F1D736C-C462-42E8-8D1E-A78073007891" sourceRef="sid-1C3EC165-141B-4F24-AC21-6F1B8BE795A1" targetRef="sid-1C352519-49B6-4968-B81A-8F1930301570"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_twoTasksProcess">
+    <bpmndi:BPMNPlane bpmnElement="twoParallelTasksProcess" id="BPMNPlane_twoTasksProcess">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="100.0" y="163.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-05E36A13-63A5-47C8-8743-DB1522655BE8" id="BPMNShape_sid-05E36A13-63A5-47C8-8743-DB1522655BE8">
+        <omgdc:Bounds height="40.0" width="40.0" x="175.0" y="158.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-1C3EC165-141B-4F24-AC21-6F1B8BE795A1" id="BPMNShape_sid-1C3EC165-141B-4F24-AC21-6F1B8BE795A1">
+        <omgdc:Bounds height="80.0" width="99.99999999999994" x="300.00000000000006" y="45.00000000000001"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-E848B9FC-2B96-41E5-89D3-4B6B3800B0C2" id="BPMNShape_sid-E848B9FC-2B96-41E5-89D3-4B6B3800B0C2">
+        <omgdc:Bounds height="79.99999999999997" width="99.99999999999994" x="300.00000000000006" y="210.00000000000003"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-F8361504-08B0-4C84-AEF3-D1EE5D2B3FF6" id="BPMNShape_sid-F8361504-08B0-4C84-AEF3-D1EE5D2B3FF6">
+        <omgdc:Bounds height="28.0" width="28.0" x="705.0000000000001" y="71.00000000000003"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-1C352519-49B6-4968-B81A-8F1930301570" id="BPMNShape_sid-1C352519-49B6-4968-B81A-8F1930301570">
+        <omgdc:Bounds height="40.0" width="40.0" x="590.0" y="65.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-0A4DF995-B5AB-44F8-ACFB-2E26B16844F6" id="BPMNEdge_sid-0A4DF995-B5AB-44F8-ACFB-2E26B16844F6">
+        <omgdi:waypoint x="129.9496588110467" y="178.09285545292158"></omgdi:waypoint>
+        <omgdi:waypoint x="175.375" y="178.375"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-5E00A408-D5DD-43AD-BD69-DB9C93A8C882" id="BPMNEdge_sid-5E00A408-D5DD-43AD-BD69-DB9C93A8C882">
+        <omgdi:waypoint x="195.5" y="158.5"></omgdi:waypoint>
+        <omgdi:waypoint x="195.5" y="85.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.00000000000006" y="85.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-1F1D736C-C462-42E8-8D1E-A78073007891" id="BPMNEdge_sid-1F1D736C-C462-42E8-8D1E-A78073007891">
+        <omgdi:waypoint x="399.9499999999967" y="85.09587332053742"></omgdi:waypoint>
+        <omgdi:waypoint x="590.4615384615385" y="85.46153846153847"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-51E423D8-E01E-479F-AF3F-48804C339AC5" id="BPMNEdge_sid-51E423D8-E01E-479F-AF3F-48804C339AC5">
+        <omgdi:waypoint x="399.95000000000005" y="250.00000000000003"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="104.90601879927232"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-5680F671-5472-41F4-B6B9-05BAFBB2091D" id="BPMNEdge_sid-5680F671-5472-41F4-B6B9-05BAFBB2091D">
+        <omgdi:waypoint x="629.5288852913968" y="85.41203703703705"></omgdi:waypoint>
+        <omgdi:waypoint x="705.0001428475709" y="85.0642850555727"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-CA4472CC-58CB-446A-85DE-7F12279B69C9" id="BPMNEdge_sid-CA4472CC-58CB-446A-85DE-7F12279B69C9">
+        <omgdi:waypoint x="195.5" y="197.43676675977653"></omgdi:waypoint>
+        <omgdi:waypoint x="195.5" y="250.0"></omgdi:waypoint>
+        <omgdi:waypoint x="299.9999999999428" y="250.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
