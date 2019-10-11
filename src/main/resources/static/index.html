@@ -1,1 +1,165 @@
-<h1>Welcome to the Flowable Training!</h1>
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Flowable training</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="custom.css"/>
+
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #a0cc47">
+    <h1 id="flowable_header"></h1>
+
+</nav>
+
+<div id="root"></div>
+<script type="text/babel">
+    function Main() {
+
+        const [processDefinitions, setProcessDefinitions] = React.useState([]);
+        const [selectedProcessDefinition, setSelectedProcessDefinition] = React.useState("");
+        const [processCreatedMessage, setProcessCreatedMessage] = React.useState();
+        const [tasks, setTasks] = React.useState([]);
+
+        React.useEffect(() => {
+            fetch("definitions").then(response => {
+                if (response.status !== 200) {
+                    // make the promise be rejected if we didn't get a 200 response
+                    throw new Error("Not 200 response")
+                }
+                return response.json()
+            }).then(json => {
+                console.log(json);
+                setProcessDefinitions(json)
+            });
+
+        }, []);
+
+
+        function handleChange(event) {
+            setSelectedProcessDefinition(event.target.value);
+            event.preventDefault();
+        }
+
+        function startProcess() {
+            console.log("Starting process " + selectedProcessDefinition);
+            fetch("startProcess?definitionId=" + selectedProcessDefinition)
+                .then(x => x.text())
+                .then(text => {
+                    setProcessCreatedMessage(`Process Created with id = ${text}`);
+                    refreshTasks();
+                    setTimeout(()=> setProcessCreatedMessage(""),3000);
+                });
+
+
+        }
+
+        function refreshTasks() {
+            fetch("tasks").then(response => {
+                if (response.status !== 200) {
+                    // make the promise be rejected if we didn't get a 200 response
+                    throw new Error("Not 200 response")
+                }
+                return response.json()
+            }).then(json => {
+                console.log(json);
+                setTasks(json)
+            });
+
+        }
+
+        function completeTask(taskId) {
+            console.log(`Completing task: ${taskId}`);
+            fetch(`completeTask?id=${taskId}`).then(response => {
+                if (response.status !== 200) {
+                    // make the promise be rejected if we didn't get a 200 response
+                    throw new Error("Not 200 response")
+                }
+                refreshTasks();
+            });
+
+        }
+
+        return (
+            <div>
+
+                <h2>Process Definition List</h2>
+                <p>This is the list of process definitions availables in the engine. This is populated from a rest endpoint that you need to implement.
+                    This endpoint should be available at the url <i>/definitions</i> and return an array of objects having a 'key' and a 'name'.</p>
+                <table className="table table-striped" style={ {width: "fit-content"}}>
+                    <thead>
+                    <tr> <th>Process Model</th></tr>
+                    </thead>
+                    <tbody>
+                    {processDefinitions.map((pd) => <tr><td scope="row">{pd.name}</td></tr>)}
+                    </tbody></table>
+                <p>Select a process definition in the combobox below to create a new process instance: </p>
+                <p>This will call a new rest endpoint. You must create it with the url <i>/startProcess</i> and it must receive a parameter <i>'definitionId'</i>. It must also return the id of the new process instance</p>
+                <select value={selectedProcessDefinition} onChange={handleChange}>
+                    <option></option>
+                    {processDefinitions.map((pd) => <option value={pd.key}>{pd.name}</option>)}
+                </select>
+
+                <button className="btn btn-primary btn-sm" onClick={startProcess}
+                        disabled={selectedProcessDefinition === ''}>Start Process
+                </button>
+
+                {processCreatedMessage && <div className="alert alert-success" role="alert">
+                    {processCreatedMessage}
+                </div>}
+
+                <h2>Task List</h2>
+                <p>This is the list of tasks. This is populated from a rest endpoint that you need to implement.
+                    This endpoint should be available at the url <i>/tasks</i> and return an array of objects having an 'id','name', 'processModel' 'and processId'.</p>
+
+                <button className="btn btn-primary btn-sm" onClick={refreshTasks}>Refresh Task List</button>
+                <p>To be able to complete a task, you need to implement a rest endpoint '/completeTask' with a parameter 'id'</p>
+
+                <table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Process Type</th>
+                        <th scope="col">Process Id</th>
+                        <th scope="col">Complete Task</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {tasks.map((task) =>
+                        <tr>
+                            <th scope="row">{task.id}</th>
+                            <td>{task.name}</td>
+                            <td>{task.processModel}</td>
+                            <td>{task.processId}</td>
+                            <td><button className="btn btn-primary btn-sm" onClick={()=>completeTask(task.id)} >Complete</button></td>
+                        </tr>)}
+
+                    </tbody>
+                </table>
+
+            </div>
+        );
+
+    }
+
+    ReactDOM.render(
+        <div className="flowable_container">
+            <h1>Welcome to the Flowable Training!</h1>
+            <Main/>
+        </div>
+        ,
+        document.getElementById('root')
+    );
+</script>
+</body>
+</html>

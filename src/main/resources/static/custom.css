@@ -1,0 +1,18 @@
+.flowable_container{
+    margin: 20px 0px 20px 40px;
+}
+
+body{
+}
+
+#flowable_header {
+    background: url(https://www.flowable.org/docs/userguide/images/logo.png);
+    background-size: 337px 54px;
+    width: 337px;
+    height: 54px;
+    display: inline-block;
+}
+
+p, h2{
+    padding: 10px;
+}
