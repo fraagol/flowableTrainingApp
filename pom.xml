@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<com.flowable.version>3.4.0</com.flowable.version>
 	</properties>
 
 	<dependencies>
@@ -54,9 +55,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.flowable</groupId>
-			<artifactId>flowable-spring-boot-starter-rest</artifactId>
-			<version>6.4.2</version>
+			<groupId>com.flowable.core</groupId>
+			<artifactId>flowable-spring-boot-starter-core-rest</artifactId>
+			<version>${com.flowable.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
